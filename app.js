@@ -27,8 +27,74 @@ startApp = () => {
             "View",
             "Update"
         ]
-    }).then();
-}
+    }).then(res => {
+        switch (res.action) {
+            case "Add":
+                add();
+                break;
+            case "View":
+                view();
+                break;
+            case "update":
+                update();
+                break;
+        }
+    });
+
+    add = () => {
+        inquirer.prompt({
+            name: "action",
+            type: "list",
+            message: "What would you like to add?",
+            choices: [
+                "Department",
+                "Role",
+                "Employee"
+            ]
+        }).then(res => {
+            switch (res.action) {
+                case "Department":
+
+                    break;
+                case "Role":
+
+                    break;
+                case "Employee":
+
+                    break;
+            }
+        })
+    };
+
+    view = () => {
+        inquirer.prompt({
+            name: "action",
+            type: "list",
+            message: "What would you like to view?",
+            choices: [
+                "Departments",
+                "Roles",
+                "Employees"
+            ]
+        }).then(res => {
+            switch (res.action) {
+                case "Departments":
+
+                    break;
+                case "Roles":
+
+                    break;
+                case "Employees":
+
+                    break;
+            }
+        })
+    };
+
+    update = () => { };
+};
+
+
 
 
 
