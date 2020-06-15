@@ -123,8 +123,18 @@ startApp = () => {
                 message: "Enter department ID"
             }
         ]).then((answers) => {
-            console.log(answers);
-            startApp();
+            connection.query(
+                "INSERT INTO department SET ?",
+                {
+                    id: answers.departmentID,
+                    name: answers.departmentName
+                },
+                (err, res) => {
+                    if (err) throw err;
+                    console.log("Department: " + answers.departmentName + " added with ID: " + answers.departmentID);
+                    startApp();
+                }
+            )
         })
     };
 
