@@ -79,20 +79,34 @@ startApp = () => {
         }).then(res => {
             switch (res.action) {
                 case "Departments":
-
+                    viewDepartments();
                     break;
                 case "Roles":
-
+                    viewRoles();
                     break;
                 case "Employees":
-
+                    viewEmployees();
                     break;
             }
         })
     };
 
     updateRole = () => {
-
+        inquirer.prompt([
+            {
+                name: "employeeID",
+                type: "input",
+                message: "Enter the employee ID  who's role you want to update"
+            },
+            {
+                name: "roleID",
+                type: "input",
+                message: "Enter new role ID."
+            }
+        ]).then((answers) => {
+            console.log(answers);
+            startApp();
+        })
     };
 
 
@@ -180,14 +194,17 @@ startApp = () => {
 
     viewDepartments = () => {
         console.table();
+        startApp();
     };
 
     viewRoles = () => {
         console.table();
+        startApp();
     };
 
     viewEmployees = () => {
         console.table();
+        startApp();
     };
 
 };
