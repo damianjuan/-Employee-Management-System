@@ -25,7 +25,7 @@ startApp = () => {
         choices: [
             "Add",
             "View",
-            "Update"
+            "Update Employee Role"
         ]
     }).then(res => {
         switch (res.action) {
@@ -54,13 +54,13 @@ startApp = () => {
         }).then(res => {
             switch (res.action) {
                 case "Department":
-
+                    addDepartment();
                     break;
                 case "Role":
-
+                    addRole();
                     break;
                 case "Employee":
-
+                    addEmployee();
                     break;
             }
         })
@@ -91,7 +91,105 @@ startApp = () => {
         })
     };
 
-    update = () => { };
+    updateRole = () => {
+
+    };
+
+
+    addDepartment = () => {
+        inquirer.prompt([
+            {
+                name: "departmentName",
+                type: "input",
+                message: "Enter department name."
+            },
+            {
+                name: "departmentID",
+                type: "input",
+                message: "Enter department ID"
+            }
+        ]).then((answers) => {
+            console.log(answers);
+            startApp();
+        })
+    };
+
+    addRole = () => {
+        inquirer.prompt([
+            {
+                name: "roleID",
+                type: "input",
+                message: "Enter role ID"
+            },
+            {
+                name: "roleTitle",
+                type: "input",
+                message: "Enter role title."
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "Enter salary for role."
+            },
+            {
+                name: "departmentID",
+                type: "input",
+                message: "Enter ID of department role belongs to."
+            }
+        ]).then((answers) => {
+            console.log(answers);
+            startApp();
+        })
+    };
+
+
+
+
+    addEmployee = () => {
+        inquirer.prompt([
+            {
+                name: "employeeID",
+                type: "input",
+                message: "Enter employee ID"
+            },
+            {
+                name: "firstName",
+                type: "input",
+                message: "Enter employee's first name."
+            },
+            {
+                name: "LastName",
+                type: "input",
+                message: "Enter employee's last name."
+            },
+            {
+                name: "roleID",
+                type: "input",
+                message: "Enter ID of employee's role."
+            },
+            {
+                name: "ManagerID",
+                type: "input",
+                message: "Enter ID of employee's manager if they have one. Otherwise press enter to continue."
+            }
+        ]).then((answers) => {
+            console.log(answers);
+            startApp();
+        })
+    };
+
+    viewDepartments = () => {
+        console.table();
+    };
+
+    viewRoles = () => {
+        console.table();
+    };
+
+    viewEmployees = () => {
+        console.table();
+    };
+
 };
 
 
