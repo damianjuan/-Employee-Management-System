@@ -35,8 +35,8 @@ startApp = () => {
             case "View":
                 view();
                 break;
-            case "update":
-                update();
+            case "Update Employee Role":
+                updateRole();
                 break;
         }
     });
@@ -96,7 +96,7 @@ startApp = () => {
             {
                 name: "employeeID",
                 type: "input",
-                message: "Enter the employee ID  who's role you want to update"
+                message: "Enter the employee ID  who's role you want to update."
             },
             {
                 name: "roleID",
