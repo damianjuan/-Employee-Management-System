@@ -129,7 +129,7 @@ startApp = () => {
                     id: answers.departmentID,
                     name: answers.departmentName
                 },
-                (err, res) => {
+                (err) => {
                     if (err) throw err;
                     console.log("Department: " + answers.departmentName + " added with ID: " + answers.departmentID);
                     startApp();
@@ -161,8 +161,20 @@ startApp = () => {
                 message: "Enter ID of department role belongs to."
             }
         ]).then((answers) => {
-            console.log(answers);
-            startApp();
+            connection.query(
+                "INSERT INTO role SET ?",
+                {
+                    id: answers.roleID,
+                    title: answers.roleTitle,
+                    salary: answers.salary,
+                    department_id: answers.departmentID
+                },
+                (err) => {
+                    if (err) throw err;
+                    console.log("Role: " + answers.roleTitle + " added with ID: " + answers.roleID);
+                    startApp();
+                }
+            )
         })
     };
 
@@ -190,15 +202,28 @@ startApp = () => {
                 name: "roleID",
                 type: "input",
                 message: "Enter ID of employee's role."
-            },
-            {
-                name: "ManagerID",
-                type: "input",
-                message: "Enter ID of employee's manager if they have one. Otherwise press enter to continue."
             }
+            // {
+            //     name: "ManagerID",
+            //     type: "input",
+            //     message: "Enter ID of employee's manager if they have one. Otherwise press enter to continue."
+            // }
         ]).then((answers) => {
-            console.log(answers);
-            startApp();
+            connection.query(
+                "INSERT INTO employee SET ?",
+                {
+                    id: answers.employeeID,
+                    first_name: answers.firstName,
+                    last_name: answers.lastName,
+                    role_id: answers.roleID
+                    //manager_id: answers.ManagerID
+                },
+                (err) => {
+                    if (err) throw err;
+                    console.log("Employee: " + answers.firstName + " added with ID: " + answers.employeeID);
+                    startApp();
+                }
+            )
         })
     };
 
