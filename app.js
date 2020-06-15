@@ -228,18 +228,33 @@ startApp = () => {
     };
 
     viewDepartments = () => {
-        console.table();
-        startApp();
+        connection.query("SELECT * FROM department", (err, res) => {
+            if (err) throw err;
+            console.log("  ");
+            console.table(res);
+            console.log("  ");
+            startApp();
+        });
     };
 
     viewRoles = () => {
-        console.table();
-        startApp();
+        connection.query("SELECT * FROM role", (err, res) => {
+            if (err) throw err;
+            console.log("  ");
+            console.table(res);
+            console.log("  ");
+            startApp();
+        });
     };
 
     viewEmployees = () => {
-        console.table();
-        startApp();
+        connection.query("SELECT * FROM employee", (err, res) => {
+            if (err) throw err;
+            console.log("  ");
+            console.table(res);
+            console.log("  ");
+            startApp();
+        });
     };
 
 };
