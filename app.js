@@ -90,8 +90,10 @@ startApp = () => {
             }
         })
     };
+}
 
-    updateRole = () => {
+updateRole = () => {
+    {
         inquirer.prompt([
             {
                 name: "employeeID",
@@ -104,159 +106,165 @@ startApp = () => {
                 message: "Enter new role ID."
             }
         ]).then((answers) => {
-            console.log(answers);
-            startApp();
-        })
-    };
-
-
-    addDepartment = () => {
-        inquirer.prompt([
-            {
-                name: "departmentName",
-                type: "input",
-                message: "Enter department name."
-            },
-            {
-                name: "departmentID",
-                type: "input",
-                message: "Enter department ID"
-            }
-        ]).then((answers) => {
             connection.query(
-                "INSERT INTO department SET ?",
-                {
-                    id: answers.departmentID,
-                    name: answers.departmentName
-                },
+                "UPDATE employee SET role_id = ? WHERE id = ?",
+                [answers.roleID, answers.employeeID],
                 (err) => {
                     if (err) throw err;
-                    console.log("Department: " + answers.departmentName + " added with ID: " + answers.departmentID);
+                    console.log("Employee role updated");
                     startApp();
                 }
-            )
-        })
+            );
+        });
     };
+};
 
-    addRole = () => {
-        inquirer.prompt([
+
+addDepartment = () => {
+    inquirer.prompt([
+        {
+            name: "departmentName",
+            type: "input",
+            message: "Enter department name."
+        },
+        {
+            name: "departmentID",
+            type: "input",
+            message: "Enter department ID"
+        }
+    ]).then((answers) => {
+        connection.query(
+            "INSERT INTO department SET ?",
             {
-                name: "roleID",
-                type: "input",
-                message: "Enter role ID"
+                id: answers.departmentID,
+                name: answers.departmentName
             },
-            {
-                name: "roleTitle",
-                type: "input",
-                message: "Enter role title."
-            },
-            {
-                name: "salary",
-                type: "input",
-                message: "Enter salary for role."
-            },
-            {
-                name: "departmentID",
-                type: "input",
-                message: "Enter ID of department role belongs to."
+            (err) => {
+                if (err) throw err;
+                console.log("Department: " + answers.departmentName + " added with ID: " + answers.departmentID);
+                startApp();
             }
-        ]).then((answers) => {
-            connection.query(
-                "INSERT INTO role SET ?",
-                {
-                    id: answers.roleID,
-                    title: answers.roleTitle,
-                    salary: answers.salary,
-                    department_id: answers.departmentID
-                },
-                (err) => {
-                    if (err) throw err;
-                    console.log("Role: " + answers.roleTitle + " added with ID: " + answers.roleID);
-                    startApp();
-                }
-            )
-        })
-    };
+        )
+    })
+};
 
-
-
-
-    addEmployee = () => {
-        inquirer.prompt([
+addRole = () => {
+    inquirer.prompt([
+        {
+            name: "roleID",
+            type: "input",
+            message: "Enter role ID"
+        },
+        {
+            name: "roleTitle",
+            type: "input",
+            message: "Enter role title."
+        },
+        {
+            name: "salary",
+            type: "input",
+            message: "Enter salary for role."
+        },
+        {
+            name: "departmentID",
+            type: "input",
+            message: "Enter ID of department role belongs to."
+        }
+    ]).then((answers) => {
+        connection.query(
+            "INSERT INTO role SET ?",
             {
-                name: "employeeID",
-                type: "input",
-                message: "Enter employee ID"
+                id: answers.roleID,
+                title: answers.roleTitle,
+                salary: answers.salary,
+                department_id: answers.departmentID
             },
-            {
-                name: "firstName",
-                type: "input",
-                message: "Enter employee's first name."
-            },
-            {
-                name: "LastName",
-                type: "input",
-                message: "Enter employee's last name."
-            },
-            {
-                name: "roleID",
-                type: "input",
-                message: "Enter ID of employee's role."
+            (err) => {
+                if (err) throw err;
+                console.log("Role: " + answers.roleTitle + " added with ID: " + answers.roleID);
+                startApp();
             }
-            // {
-            //     name: "ManagerID",
-            //     type: "input",
-            //     message: "Enter ID of employee's manager if they have one. Otherwise press enter to continue."
-            // }
-        ]).then((answers) => {
-            connection.query(
-                "INSERT INTO employee SET ?",
-                {
-                    id: answers.employeeID,
-                    first_name: answers.firstName,
-                    last_name: answers.lastName,
-                    role_id: answers.roleID
-                    //manager_id: answers.ManagerID
-                },
-                (err) => {
-                    if (err) throw err;
-                    console.log("Employee: " + answers.firstName + " added with ID: " + answers.employeeID);
-                    startApp();
-                }
-            )
-        })
-    };
+        )
+    })
+};
 
-    viewDepartments = () => {
-        connection.query("SELECT * FROM department", (err, res) => {
-            if (err) throw err;
-            console.log("  ");
-            console.table(res);
-            console.log("  ");
-            startApp();
-        });
-    };
 
-    viewRoles = () => {
-        connection.query("SELECT * FROM role", (err, res) => {
-            if (err) throw err;
-            console.log("  ");
-            console.table(res);
-            console.log("  ");
-            startApp();
-        });
-    };
 
-    viewEmployees = () => {
-        connection.query("SELECT * FROM employee", (err, res) => {
-            if (err) throw err;
-            console.log("  ");
-            console.table(res);
-            console.log("  ");
-            startApp();
-        });
-    };
 
+addEmployee = () => {
+    inquirer.prompt([
+        {
+            name: "employeeID",
+            type: "input",
+            message: "Enter employee ID"
+        },
+        {
+            name: "firstName",
+            type: "input",
+            message: "Enter employee's first name."
+        },
+        {
+            name: "LastName",
+            type: "input",
+            message: "Enter employee's last name."
+        },
+        {
+            name: "roleID",
+            type: "input",
+            message: "Enter ID of employee's role."
+        }
+        // {
+        //     name: "ManagerID",
+        //     type: "input",
+        //     message: "Enter ID of employee's manager if they have one. Otherwise press enter to continue."
+        // }
+    ]).then((answers) => {
+        connection.query(
+            "INSERT INTO employee SET ?",
+            {
+                id: answers.employeeID,
+                first_name: answers.firstName,
+                last_name: answers.lastName,
+                role_id: answers.roleID
+                //manager_id: answers.ManagerID
+            },
+            (err) => {
+                if (err) throw err;
+                console.log("Employee: " + answers.firstName + " added with ID: " + answers.employeeID);
+                startApp();
+            }
+        )
+    })
+};
+
+viewDepartments = () => {
+    connection.query("SELECT * FROM department", (err, res) => {
+        if (err) throw err;
+        console.log("  ");
+        console.table(res);
+        console.log("  ");
+        startApp();
+    });
+};
+
+viewRoles = () => {
+    connection.query("SELECT * FROM role", (err, res) => {
+        if (err) throw err;
+        console.log("  ");
+        console.table(res);
+        console.log("  ");
+        startApp();
+    });
+};
+
+viewEmployees = () => {
+    connection.query("SELECT * FROM employee", (err, res) => {
+        if (err) throw err;
+        console.log("  ");
+        console.table(res);
+        console.log("  ");
+        startApp();
+    });
 };
 
 
@@ -264,20 +272,22 @@ startApp = () => {
 
 
 
-// Build a command-line application that at a minimum allows the user to:
 
-//   * Add departments, roles, employees
 
-//   * View departments, roles, employees
+    // Build a command-line application that at a minimum allows the user to:
 
-//   * Update employee roles
+    //   * Add departments, roles, employees
 
-// Bonus points if you're able to:
+    //   * View departments, roles, employees
 
-//   * Update employee managers
+    //   * Update employee roles
 
-//   * View employees by manager
+    // Bonus points if you're able to:
 
-//   * Delete departments, roles, and employees
+    //   * Update employee managers
 
-//   * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
+    //   * View employees by manager
+
+    //   * Delete departments, roles, and employees
+
+    //   * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
