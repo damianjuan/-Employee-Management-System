@@ -93,6 +93,20 @@ startApp = () => {
 }
 
 updateRole = () => {
+    connection.query("SELECT * FROM employee", (err, res) => {
+        if (err) throw err;
+        console.log("  ");
+        console.log("Employees");
+        console.table(res);
+        console.log("  ");
+    });
+    connection.query("SELECT * FROM role", (err, res) => {
+        if (err) throw err;
+        console.log("Roles");
+        console.table(res);
+        console.log("  ");
+
+    });
     {
         inquirer.prompt([
             {
@@ -241,6 +255,7 @@ viewDepartments = () => {
     connection.query("SELECT * FROM department", (err, res) => {
         if (err) throw err;
         console.log("  ");
+        console.log("Departments");
         console.table(res);
         console.log("  ");
         startApp();
@@ -251,6 +266,7 @@ viewRoles = () => {
     connection.query("SELECT * FROM role", (err, res) => {
         if (err) throw err;
         console.log("  ");
+        console.log("Roles");
         console.table(res);
         console.log("  ");
         startApp();
@@ -261,6 +277,7 @@ viewEmployees = () => {
     connection.query("SELECT * FROM employee", (err, res) => {
         if (err) throw err;
         console.log("  ");
+        console.log("Employees");
         console.table(res);
         console.log("  ");
         startApp();
